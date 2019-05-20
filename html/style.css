@@ -1,0 +1,87 @@
+/*
+==== 
+placeholder styling
+====
+*/
+body {
+  font-family: sans-serif;
+  margin: 10px auto;
+  font-size: 16px;
+}
+
+
+div.section-block {
+	display: block; 	width: 100%; position: relative;
+	margin: 2em auto; padding: 10% auto;
+}
+
+#section1, #section3 {min-height: 600px;}
+
+#section1 p , #section3 p {font-size: 1.1em; text-align: center; padding: 4em;}
+
+h2.sectionTitle {text-align: center;}
+
+/*
+==== 
+end of placeholder styling
+====
+*/
+
+
+/* Section 2 map styles*/
+
+div#chart {
+	width: 100%;
+	position: sticky; 
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0; min-height: 10em;
+  z-index: 0;
+  padding-top: 50px; padding-bottom: 50px;
+  /*border: 1px solid red; */ /* for debugging purposes only */
+}
+
+div#chart svg {  z-index: 0; }
+#animatedMapContainer{ padding-bottom: 4em; }
+
+path.q1Line {fill: none; stroke-dasharray: 2,4;}
+path.q3Line {fill: none; stroke-dasharray: 4,2,1,2;}
+
+
+div.chartChatter {
+	position: relative;
+	width: 80%;
+	background-color: rgba(255,255,255,0.65);
+	margin-left: auto; margin-right: auto;
+	padding: 1.2em;
+	z-index: 100;
+}
+
+
+.axislabel {
+  fill: #777; font: 12px sans-serif;
+}
+
+.keygroup {display: none; }
+.keygroup.visible {display: block; cursor: pointer; font-size: 12px; }
+
+.year.label, .legendlabel {
+  font: 600 14px "Helvetica Neue"; 
+}
+
+.year.label { font-size: 13px; }
+
+.smalllegendlabel {
+  font: 400 10px "Helvetica Neue"; 
+}
+
+g.active .keygroup text { font-size: 14px; }
+g.active .keygroup path.medianLine { stroke-width: 2.5px;  }
+
+path.medianLine { fill: none; stroke-width: 2px;}
+path.hidden {opacity: 0;}
+
+g.active path.quartileArea { fill-opacity: 0.3; }
+path.quartileArea.visible {fill-opacity: 0.1;}
+
+g.active path.medianLine { stroke-width: 3px; }
