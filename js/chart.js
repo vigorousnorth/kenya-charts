@@ -35,7 +35,7 @@ var colorScale = d3.scaleSequential(d3.interpolateRdPu)
     .domain([2006,2015]);
 
 //load the data and set width/height from the loaded DOM
-d3.csv('../data/rural_customer_data_fig_7a.csv')
+d3.csv('data/rural_customer_data_fig_7a.csv')
   .then( ruralData => {
 
   ruralData.map((d,i) => {
