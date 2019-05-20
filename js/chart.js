@@ -46,7 +46,7 @@ d3.csv('data/rural_customer_data_fig_7a.csv')
 
   width = d3.select("#chart").node().getBoundingClientRect().width;
   key_w = width * 0.28;
-  height = Math.min(width * 0.6, window.innerHeight);
+  height = Math.min(width * 0.6, window.innerHeight * 0.7);
 
   d3.selectAll('.chartChatter')
     .style('margin-bottom', viewportHeight*1.3 +'px' )
