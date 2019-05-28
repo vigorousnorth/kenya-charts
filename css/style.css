@@ -21,6 +21,9 @@ div.section-block {
 
 h2.sectionTitle {text-align: center;}
 
+g.nationGroup.background > text { visibility: hidden ; }
+g.nationGroup.highlighted > text { visibility: visible; ; }
+
 /*
 ==== 
 end of placeholder styling
