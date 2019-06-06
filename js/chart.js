@@ -269,7 +269,7 @@ function tweenDash() {
 function scrollInit() {
   animateYearGroup([0]);
 
-  window.addEventListener('click', function(e) {  
+  document.getElementById("clickOverlay").addEventListener("click", function(e) {  
 
     d3.select('div#clickOverlay').remove();
 
