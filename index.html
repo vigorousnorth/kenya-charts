@@ -22,15 +22,6 @@ path.qLine {stroke: 1px solid #555; fill: none; stroke-dasharray:1}
 <body>
 
 
-<div class="section-block" id="section1">
-	<h2 class="sectionTitle">Section 1</h2>	
-	<p>Some introductory content will go in here</p>
-	<p>...</p>
-</div>
-
-
-
-
 
 <!-- 
 =======================
@@ -38,51 +29,26 @@ embed this HTML from here....
 ======================= 
 -->
 
-<div  id="animatedMapContainer" style="border-top: 1px solid red; border-bottom: 1px solid red; position: relative;">
-
-	<h2 class="sectionTitle">Section 2</h2>	
-
-
-	<div id ="chart" style="height: 500px;">	
+	<div id ="chart" style="width: 100%; height: 800px;">	
 		
 	</div>
 
-	<div class="chartChatter" id="chatter_1">
-		<h3>Rural customers who connected to the grid in 2009</h3>
 
-		<p>The first block of text will desribe the 2009 data: consumption rises rapidly within the first few months of connection, then essentially plateaus after a household has been connected for two years.</p>
-
+	<div id = "clickOverlay" style="
+		position: absolute;
+    width: 100%; height: auto;
+    background-color: rgba(255,255,255,0.8);
+    text-align: center;
+    top: 120px;
+    padding: 1em 2.5%;
+    margin: 0px;
+    font-style: italic;
+    font-size: 18px;
+    font-weight: 800; ">
+		Click to animate
 	</div>
 
 
-	<div class="chartChatter" id="chatter_2">
-		
-		<h3>Rural customers who connected to the grid in 2010-2015</h3>
-
-		<p>Customers who have connected to the grid more recently have plateaued at diminishing levels of consumption.</p>
-		<p>Two years after their initial connections, the median rural households that were connected in 2009 and 2010 were consistently consuming over 30 kilowatt-hours a month, yet the median households that were connected in 2011 and 2012 only consumed 25 kilowatt-hours a month after a similar period of access to electricity.</p>
-
-		<p>Note how this pattern holds for upper-quartile households as well.</p>
-	</div>
-
-
-
-
-</div> <!--  end of div#animatedMapContainer -->
-
-
-<!-- 
-=======================
-to here.
-======================= 
--->
-
-
-
-
-<div class="section-block" id="section3" style="background-color: #fff;">
-	<h2 class="sectionTitle">End of animated chart - begin section 3</h2>	
-</div>
 
 
 </body></html>

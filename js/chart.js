@@ -105,18 +105,13 @@ function drawCharts(yearsarray) {
 
   legendLabels = svg.append('g')
     .attr("transform",`translate( ${margin.left*2}, -40)`)
+    .attr("id","legendLabels")
 
   legendLabels.append("text")
     .attr("class", "legendlabel")
     .attr("text-anchor", "start")
     .attr('x', 36).attr('y', 40)
     .text('Year of connection:')
-  legendLabels.append("text")
-    .attr("class", "legendlabel")
-    .attr("text-anchor", "start")
-    .attr("x", 36)
-    .attr("y", 60 )
-    .text('(mouse over to interact)')
 
   legendLabels.append("text")
     .attr("class", "smalllegendlabel")
@@ -272,34 +267,30 @@ function tweenDash() {
 }
 
 function scrollInit() {
-    var year09IsAnimated = false, year15IsAnimated = false;
+  animateYearGroup([0]);
 
-    window.addEventListener('scroll', function(e) {    
-    // event triggers on scrolling
-        var current = window.scrollY;
-        var chartCeiling = document.getElementById("chart").getBoundingClientRect().top,
-          chartFloor = document.getElementById("chart").getBoundingClientRect().bottom,
-          chatter1Ceiling = document.getElementById("chatter_1").getBoundingClientRect().top;
-          chatter2Ceiling = document.getElementById("chatter_2").getBoundingClientRect().top;
+  window.addEventListener('click', function(e) {  
 
-        if (chartCeiling < viewportHeight/2 && !year09IsAnimated) { 
-            animateYearGroup([0]);
-            year09IsAnimated = true;
-        } else if  ((current>=chartCeiling) && (chatter2Ceiling < viewportHeight/2) 
-            && year09IsAnimated && !year15IsAnimated) {
-           animateYearGroup([1,2,3,4,5,6]);
-           year15IsAnimated = true;
-        }
-    });
-  }
+    d3.select('div#clickOverlay').remove();
 
-  window.addEventListener("resize", function() {
-    if (window.innerWidth != viewportWidth)  { 
-      viewportWidth = window.innerWidth;
-      viewportHeight = window.innerHeight; 
-      drawCharts(); scrollInit(); }
+    d3.select("g#legendLabels").append("text")
+      .attr("class", "legendlabel")
+      .attr("text-anchor", "start")
+      .attr("x", 36)
+      .attr("y", 60 )
+      .text('(mouse over to interact)')  
+    
+    animateYearGroup([1,2,3,4,5,6]);
+  
   });
+}
 
+window.addEventListener("resize", function() {
+  if (window.innerWidth != viewportWidth)  { 
+    viewportWidth = window.innerWidth;
+    viewportHeight = window.innerHeight; 
+    drawCharts(); scrollInit(); }
+});
 
 
 function findElement(arr, propName, propValue) {
