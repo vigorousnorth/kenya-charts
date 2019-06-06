@@ -10,7 +10,7 @@ let yearsarray = [
 
 var svg, key, width, height, yeargroup, viewportWidth = window.innerWidth, viewportHeight = window.innerHeight;
 
-const margin = ({top: 60, right: 20, bottom: 50, left: 50});
+const margin = ({top: 100, right: 20, bottom: 40, left: 50});
 
 let x = d3.scaleLinear(), y = d3.scaleLinear()
     
@@ -46,7 +46,9 @@ d3.csv('data/rural_customer_data_fig_7a.csv')
 
   width = d3.select("#chart").node().getBoundingClientRect().width;
   key_w = width * 0.28;
-  height = Math.min(width * 0.6, window.innerHeight * 0.7);
+  height = Math.min(width, (window.innerHeight -140) * 0.95);
+
+  d3.select("#chart").style("height", height);
 
   d3.selectAll('.chartChatter')
     .style('margin-bottom', viewportHeight*1.3 +'px' )
@@ -104,7 +106,7 @@ function drawCharts(yearsarray) {
   // Add an legend label.
 
   legendLabels = svg.append('g')
-    .attr("transform",`translate( ${margin.left*2}, -40)`)
+    .attr("transform",`translate( ${margin.left*2}, -${margin.top*0.6})`)
     .attr("id","legendLabels")
 
   legendLabels.append("text")
@@ -171,7 +173,7 @@ function drawCharts(yearsarray) {
     .attr('class', 'keygroup')
     .attr('width', key_w)  
     .attr("transform", (d,i) =>
-      `translate(${margin.left+12}, ${40+16*(i)})`)
+      `translate(${margin.left+12}, ${-margin.top*0.6 + 78 + 16*(i)})`)
     .on('mouseover', showYear).on('mouseout',showAll)
     .raise();
 
@@ -271,7 +273,7 @@ function scrollInit() {
 
   document.getElementById("clickOverlay").addEventListener("click", function(e) {  
 
-    d3.select('div#clickOverlay').remove();
+    if (document.getElementById("clickOverlay")) { d3.select('div#clickOverlay').remove(); }
 
     d3.select("g#legendLabels").append("text")
       .attr("class", "legendlabel")
