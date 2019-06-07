@@ -111,7 +111,7 @@ function drawChart(data) {
       data.filter(d => {
         let arr = d.bubbleData;
         let r = true;
-        for (var i = 15; i <= 50; i++) {
+        for (var i = 20; i <= 54; i++) {
           if (arr[i][1] && arr[i][2]) { continue; }
           else { r = false; break; }
         }
@@ -167,16 +167,16 @@ function drawChart(data) {
     animating = true;
     console.log(animating);
     // Start a transition that interpolates the data based on year.
-    ind = 15;
+    ind = 20;
 
-    setInterval(function(){ if (ind<50) { ind++ } }, 1000);
+    setInterval(function(){ if (ind<54) { ind++ } }, 600);
 
     yearLabel.text( ind + 1960);
         bubbleGroups.attr('transform', d => 
           `translate(${x(d.bubbleData[ind][1])},${y(d.bubbleData[ind][2])})` ); 
 
     bubbleGroups.transition()
-    .duration(500)
+    .duration(300)
     // .delay(function(d) { return d * 40; })
     .on("start", function repeat() {
         yearLabel.text( ind + 1960);
