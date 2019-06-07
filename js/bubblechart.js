@@ -1,12 +1,13 @@
-var svg, key, width, height, yeargroup, 
+var svg, key, width, height, yeargroup, bubbleGroups, yearLabel, animating = false;
   viewportWidth = window.innerWidth, viewportHeight = window.innerHeight;
 
-const margin = ({top: 60, right: 20, bottom: 50, left: 50});
+const margin = ({top: 20, right: 20, bottom: 50, left: 50});
 
-let x = d3.scaleLog(), y = d3.scaleLog(), regionColor = d3.scaleOrdinal()
+let x = d3.scaleLog(), y = d3.scaleLog(), regionColor = d3.scaleOrdinal();
+let ind = 50  ; //index of the the year array; 20 corresponds to the year 1980, 30 too 1990, etc.
 
 //load the data and set width/height from the loaded DOM
-Promise.all( [ d3.csv('data/iso-nation-codes-and-regions.csv'), d3.csv('data/WorldBankData.csv') ])
+Promise.all( [ d3.csv('data/iso-nation-codes-and-regions.csv'), d3.csv('data/WorldBankData.csv'), document ])
   .then( alldata => {
 
     let bubbleData = alldata[1], countries = alldata[0];
@@ -42,19 +43,21 @@ Promise.all( [ d3.csv('data/iso-nation-codes-and-regions.csv'), d3.csv('data/Wor
 
     });
     
-    width = d3.select("#bubbleChart").node().getBoundingClientRect().width;
-    key_w = width * 0.28;
-    height = Math.min(width * 0.8, window.innerHeight * 0.85);
-
-
     drawChart(countries);
 
   });
 
 
 
+
+
 // draw the charts
 function drawChart(data) {
+
+  width = window.innerWidth;
+    key_w = width * 0.28;
+    height = Math.min(width * 0.8, window.innerHeight * 0.85);
+
 
   let svg = d3.select("#bubbleChart").append('svg')
     .attr('width',width)
@@ -63,7 +66,6 @@ function drawChart(data) {
 
   x.domain([300, 80000] )
     // d3.max(data, d =>  d3.max(d.bubbleData.map(d => d[1]) ) ) 
-    
     .range([margin.left, width - margin.right]);
 
   y.domain([50, 15000])
@@ -103,67 +105,95 @@ function drawChart(data) {
     "Indonesia","Korea, Republic of","Japan","Mexico","Nigeria","Saudi Arabia",
     "China","Kenya","South Africa","Brazil","Netherlands"];
 
-  let bubbleGroups = svg.append('g').attr('id','dataGroup')
+  bubbleGroups = svg.append('g').attr('id','dataGroup')
     .selectAll('g.nationGroup')
     .data(
       data.filter(d => {
         let arr = d.bubbleData;
-        let yr2010 = arr[50];
-        return (yr2010[1] && yr2010[2] ) 
+        let r = true;
+        for (var i = 15; i <= 50; i++) {
+          if (arr[i][1] && arr[i][2]) { continue; }
+          else { r = false; break; }
+        }
+        return r;
       } )
-      .sort( (a,b) => ( b.bubbleData[50][0] - a.bubbleData[50][0] ) )
+      .sort( (a,b) => ( b.bubbleData[ind][0] - a.bubbleData[ind][0] ) )
     )
     .enter().append('g')
-    .attr('transform', d => `translate(${x(d.bubbleData[50][1])},${y(d.bubbleData[50][2])})`)
+    .attr('transform', d => 
+      `translate(${x(d.bubbleData[ind][1])},${y(d.bubbleData[ind][2])})` 
+    )
     .attr('class', d => {
-      console.log( visibleLabels.indexOf(d.name) );
       return (visibleLabels.indexOf(d.name) > -1) ? 'nationGroup highlighted' : 'nationGroup background'
     })
     .on("mouseover", function() { d3.select(this).classed("background", false ) })      
     .on("mouseout",  function() { d3.select(this).classed("background", true) });
 
 
-
-
   bubbleGroups.append('circle')
-    .attr('r', d =>  Math.max(2, Math.sqrt(d.bubbleData[50][0]/1000000) ) )
+    .attr('r', d =>  Math.max(2, Math.sqrt(d.bubbleData[ind][0]/1000000) ) )
     .attr('fill', d =>  regionColor(d.region))  
     .attr('stroke-color','#222').attr('stroke-width','1px');
-
-  
+ 
 
   bubbleGroups.append('text')
-    .attr('dx', d =>  2 + Math.max(1, Math.sqrt(d.bubbleData[50][0]/1000000) ) )
+    .attr('dx', d =>  2 + Math.max(1, Math.sqrt(d.bubbleData[ind][0]/1000000) ) )
     .text(d =>  d.name)
     
 
   // Add an legend label.
 
   legendLabels = svg.append('g')
-    .attr("transform",`translate( ${margin.left*2}, -40)`)
+    .attr("transform",`translate( ${width - margin.right - 4}, ${height - margin.bottom - 4} )`)
 
-  // legendLabels.append("text")
-  //   .attr("class", "legendlabel")
-  //   .attr("text-anchor", "start")
-  //   .attr('x', 36).attr('y', 40)
-  //   .text('Year of connection:')
+
+  yearLabel = legendLabels.append("text")
+    .attr("id", "legendYear")
+    .attr("text-anchor", "end")
+    .text( ind + 1960);
   // legendLabels.append("text")
   //   .attr("class", "legendlabel")
   //   .attr("text-anchor", "start")
   //   .attr("x", 36)
   //   .attr("y", 60 )
   //   .text('(mouse over to interact)')
+
+  document.getElementById("clickOverlay").addEventListener("click", function(e) {  
+    if (d3.select('div#clickOverlay')) { d3.select('div#clickOverlay').remove(); }
+    animate();
+  });
+
+  function animate() {
+    animating = true;
+    console.log(animating);
+    // Start a transition that interpolates the data based on year.
+    ind = 15;
+
+    setInterval(function(){ if (ind<50) { ind++ } }, 1000);
+
+    yearLabel.text( ind + 1960);
+        bubbleGroups.attr('transform', d => 
+          `translate(${x(d.bubbleData[ind][1])},${y(d.bubbleData[ind][2])})` ); 
+
+    bubbleGroups.transition()
+    .duration(500)
+    // .delay(function(d) { return d * 40; })
+    .on("start", function repeat() {
+        yearLabel.text( ind + 1960);
+        d3.active(this)
+        .transition()
+          .attr('transform', d => 
+            `translate(${x(d.bubbleData[ind][1])},${y(d.bubbleData[ind][2])})` 
+        )
+        .transition()
+          .on("end", repeat);
+      });
+  }
+
+  
   
 }
 
-
-
-window.addEventListener("resize", function() {
-  if (window.innerWidth != viewportWidth)  { 
-    viewportWidth = window.innerWidth;
-    viewportHeight = window.innerHeight; 
-    drawCharts(); scrollInit(); }
-});
 
 
 function findElement(arr, propName, propValue) {

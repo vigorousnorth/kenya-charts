@@ -60,6 +60,7 @@ div.chartChatter {
 	z-index: 100;
 }
 
+text#legendYear {font-size: 72px; fill: #aaa; font-weight: 800;}
 
 .axislabel {
   fill: #777; font: 12px sans-serif;
