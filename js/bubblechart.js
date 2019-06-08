@@ -1,7 +1,7 @@
 var svg, key, width, height, yeargroup, bubbleGroups, yearLabel, animating = false;
   viewportWidth = window.innerWidth, viewportHeight = window.innerHeight;
 
-const margin = ({top: 20, right: 20, bottom: 50, left: 50});
+const margin = ({top: 20, right: 60, bottom: 80, left: 50});
 
 let x = d3.scaleLog(), y = d3.scaleLog(), regionColor = d3.scaleOrdinal();
 let ind = 50  ; //index of the the year array; 20 corresponds to the year 1980, 30 too 1990, etc.
@@ -64,21 +64,28 @@ function drawChart(data) {
     .attr('height', height+margin.top)
     .append('g').attr("transform", `translate(0,${margin.top})`);   
 
-  x.domain([300, 80000] )
+  x.domain([201, 100000] )
     // d3.max(data, d =>  d3.max(d.bubbleData.map(d => d[1]) ) ) 
     .range([margin.left, width - margin.right]);
 
-  y.domain([50, 15000])
+  y.domain([21, 15000])
     // d3.max(data, d =>  d3.max(d.bubbleData.map(d => d[2]) ) ) ] )
     .range([height - margin.bottom, margin.top]);
 
 
   xAxis = d3.axisBottom(x).ticks(20).tickSizeOuter(0).tickFormat(d3.format('$~s'));
+    
   yAxis = d3.axisLeft(y).tickFormat(d3.format('~s'));
 
   svg.append("g")
     .attr("transform", `translate(0,${height - margin.bottom})`)
-    .call(xAxis);
+    .call(xAxis)
+    .selectAll('text')
+    .attr("y", 3)
+    .attr("x", -9)
+    .attr("dy", ".35em")
+    .attr("transform", "rotate(-60)")
+    .style("text-anchor", "end");
 
   svg.append("g")
     .attr("transform", `translate(${margin.left},0)`)
