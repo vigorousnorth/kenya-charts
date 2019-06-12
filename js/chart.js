@@ -8,9 +8,9 @@ let yearsarray = [
   {'year': 2015,  'consumption': [] }
 ];
 
-var svg, key, width, height, yeargroup, viewportWidth = window.innerWidth, viewportHeight = window.innerHeight;
+var svg, key, width, height, yeargroup, viewportWidth = window.innerWidth, viewportHeight = window.innerHeight, pt;
 
-const margin = ({top: 100, right: 20, bottom: 40, left: 50});
+const margin = ({top: 75, right: 20, bottom: 40, left: 50});
 
 let x = d3.scaleLinear(), y = d3.scaleLinear()
     
@@ -47,7 +47,7 @@ d3.csv('data/rural_customer_data_fig_7a.csv')
 
   width = d3.select("#chart").node().getBoundingClientRect().width;
   key_w = width * 0.28;
-  height = Math.min(width, (window.innerHeight -140) * 0.95);
+  height = (window.innerHeight -140) * 0.95;
 
   d3.select("#chart").style("height", height);
 
@@ -73,7 +73,7 @@ function drawCharts(yearsarray) {
 
   x.domain([0, 2+d3.max(yearsarray, d => (d.consumption.length)) ])
     .range([margin.left, width - margin.right]);
-  y.domain([0, d3.max(yearsarray.map(d => d3.max(d.consumption.map(d => d[1] - 10) ) ) ) ])
+  y.domain([0, d3.max(yearsarray.map(d => d3.max(d.consumption.map(d => d[1] - 5) ) ) ) ])
     .range([height - margin.bottom, margin.top]);
 
   xAxis = d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0);
@@ -107,7 +107,7 @@ function drawCharts(yearsarray) {
   // Add an legend label.
 
   legendLabels = svg.append('g')
-    .attr("transform",`translate( ${margin.left*2}, -${margin.top*0.6})`)
+    .attr("transform",`translate( ${margin.left*1.8}, -${margin.top*0.8})`)
     .attr("id","legendLabels")
 
   legendLabels.append("text")
@@ -174,7 +174,7 @@ function drawCharts(yearsarray) {
     .attr('class', 'keygroup')
     .attr('width', key_w)  
     .attr("transform", (d,i) =>
-      `translate(${margin.left+12}, ${-margin.top*0.6 + 78 + 16*(i)})`)
+      `translate(${margin.left}, ${-margin.top*0.8 + 78 + 16*(i)})`)
     .on('mouseover', showYear)
     .on('mouseout', showAll)
     .raise();
@@ -206,7 +206,10 @@ function drawCharts(yearsarray) {
 
 function showYear(d) { 
   let selector = `.year_${d.year}`;
+  clearTimeout(pt);
   d3.selectAll('.yeargroup').classed('active', false);
+
+  d3.select("#clickOverlay").style("visibility", "hidden");
   //add active class to highlighted key group
   // d3.select(this).classed('active', true);
   //add active class to highlighted median line
@@ -219,11 +222,14 @@ function showYear(d) {
 
 function showAll(d) { 
   let selector = `.year_${d.year}`;
+
   d3.selectAll('.active').classed('active', false);
   d3.selectAll(selector).selectAll("path.quartileLine")
     .transition()
     .duration(250)
-    .style("opacity", 0.25)
+    .style("opacity", 0.25);
+
+  pt = setTimeout( function() { d3.select("#clickOverlay").style("visibility", "visible"); }, 1000);
 }
 
 function hideYearGroup(indexArray) { 
