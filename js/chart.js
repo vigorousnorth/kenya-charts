@@ -213,7 +213,7 @@ function showYear(d) {
   d3.selectAll(selector).classed('active', true);
   d3.selectAll(selector).selectAll("path.quartileLine")
     .transition()
-    .duration(500)
+    .duration(250)
     .style("opacity", 1);
 }
 
@@ -222,7 +222,7 @@ function showAll(d) {
   d3.selectAll('.active').classed('active', false);
   d3.selectAll(selector).selectAll("path.quartileLine")
     .transition()
-    .duration(500)
+    .duration(250)
     .style("opacity", 0.25)
 }
 
