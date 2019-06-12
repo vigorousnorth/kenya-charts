@@ -228,13 +228,15 @@ function showAll(d) {
 
 function hideYearGroup(indexArray) { 
   d3.selectAll('.active').classed('active', false);
-  yeargroup  
-    .filter((d,i) => (indexArray.indexOf(i) > -1) )
-    .selectAll('path.medianLine')
+  let target = yeargroup.filter((d,i) => (indexArray.indexOf(i) > -1) );
+
+  target.selectAll('path.medianLine')
     .attr("stroke-dasharray", function() { return '0,' + this.getTotalLength(); });
-  yeargroup  
-    .filter((d,i) => (indexArray.indexOf(i) > -1) )
-    .selectAll('g.keygroup').classed('visible',false);
+
+  target.selectAll('path.quartileLine')
+    .style('opacity', 0);
+    
+  target.selectAll('g.keygroup').classed('visible',false);
 
 }
 
