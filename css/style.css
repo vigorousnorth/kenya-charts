@@ -3,21 +3,11 @@
 placeholder styling
 ====
 */
-body {
-  font-family: sans-serif;
+body, svg {
+  font-family: "CalibreWeb-Regular" sans-serif;
   margin: 10px auto;
   font-size: 16px;
 }
-
-
-div.section-block {
-	display: block; 	width: 100%; position: relative;
-	margin: 2em auto; padding: 10% auto;
-}
-
-#section1, #section3 {min-height: 600px;}
-
-#section1 p , #section3 p {font-size: 1.1em; text-align: center; padding: 4em;}
 
 h2.sectionTitle {text-align: center;}
 
@@ -47,8 +37,8 @@ div#chart {
 div#chart svg {  z-index: 0; }
 #animatedMapContainer{ padding-bottom: 4em; }
 
-path.q1Line {fill: none; stroke-dasharray: 2,4;}
-path.q3Line {fill: none; stroke-dasharray: 4,2,1,2;}
+path.q1Line {fill: none; stroke-dasharray: 10,3;}
+path.q3Line {fill: none; stroke-dasharray: 6,2,2,2;}
 
 
 div.chartChatter {
@@ -63,29 +53,32 @@ div.chartChatter {
 text#legendYear {font-size: 72px; fill: #aaa; font-weight: 800;}
 
 .axislabel {
-  fill: #777; font: 12px sans-serif;
+  fill: #777; font: 12px;
 }
 
 .keygroup {display: none; }
 .keygroup.visible {display: block; cursor: pointer; font-size: 12px; }
 
 .year.label, .legendlabel {
-  font: 600 14px "Helvetica Neue"; 
+  font: 600 14px "CalibreWeb-Regular";
 }
 
 .year.label { font-size: 13px; }
 
 .smalllegendlabel {
-  font: 400 10px "Helvetica Neue"; 
+  font: 400 10px "CalibreWeb-Regular"; 
 }
 
 g.active .keygroup text { font-size: 14px; }
 g.active .keygroup path.medianLine { stroke-width: 2.5px;  }
 
 path.medianLine { fill: none; stroke-width: 2px;}
+
 path.hidden {opacity: 0;}
 
-g.active path.quartileArea { fill-opacity: 0.3; }
-path.quartileArea.visible {fill-opacity: 0.1;}
-
 g.active path.medianLine { stroke-width: 3px; }
+
+path.q1Line, path.q3Line { stroke-width: 2px; }
+
+
+g.active path.q1Line, g.active path.q3Line { stroke-width: 3px; }
