@@ -11,26 +11,16 @@ body, svg {
 
 h2.sectionTitle {text-align: center;}
 
-g.nationGroup.background > text { visibility: hidden ; }
-g.nationGroup.highlighted > text { visibility: visible; ; }
+text.background  { visibility: hidden ; }
+text.highlighted { visibility: visible; }
 
-/*
-==== 
-end of placeholder styling
-====
-*/
+g.nationGroup {cursor: pointer;}
 
-
-/* Section 2 map styles*/
-
-div#chart {
+div#chart, div#bubbleChart {
 	width: 100%;
-	position: sticky; 
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
   top: 0; min-height: 10em;
   z-index: 0;
-  padding-top: 50px; padding-bottom: 50px;
+  padding-top: 10px; padding-bottom: 10px;
   /*border: 1px solid red; */ /* for debugging purposes only */
 }
 
@@ -40,15 +30,6 @@ div#chart svg {  z-index: 0; }
 path.q1Line {fill: none; stroke-dasharray: 10,3;}
 path.q3Line {fill: none; stroke-dasharray: 6,2,2,2;}
 
-
-div.chartChatter {
-	position: relative;
-	width: 80%;
-	background-color: rgba(255,255,255,0.65);
-	margin-left: auto; margin-right: auto;
-	padding: 1.2em;
-	z-index: 100;
-}
 
 text#legendYear {font-size: 72px; fill: #aaa; font-weight: 800;}
 
@@ -80,5 +61,12 @@ g.active path.medianLine { stroke-width: 3px; }
 
 path.q1Line, path.q3Line { stroke-width: 2px; }
 
-
 g.active path.q1Line, g.active path.q3Line { stroke-width: 3px; }
+
+
+@media only screen and (max-width: 600px) {
+  svg {
+    font-size: 11px;
+  }
+  g.tick {font-size: 9px;}
+}
