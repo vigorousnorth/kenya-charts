@@ -73,7 +73,7 @@ function drawCharts(yearsarray) {
 
   x.domain([0, 2+d3.max(yearsarray, d => (d.consumption.length)) ])
     .range([margin.left, width - margin.right]);
-  y.domain([0, d3.max(yearsarray.map(d => d3.max(d.consumption.map(d => d[1] - 5) ) ) ) ])
+  y.domain([0, d3.max(yearsarray.map(d => d3.max(d.consumption.map(d => d[2] + 10) ) ) ) ])
     .range([height - margin.bottom, margin.top]);
 
   xAxis = d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0);
