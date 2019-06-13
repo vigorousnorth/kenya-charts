@@ -243,6 +243,8 @@ function hideYearGroup(indexArray) {
 
   target.selectAll('path.quartileLine')
     .style('opacity', 0);
+
+  target.selectAll('path.quartileArea').classed('visible',false).attr('fill-opacity',0);
     
   target.selectAll('g.keygroup').classed('visible',false);
 
