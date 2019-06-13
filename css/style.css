@@ -61,6 +61,10 @@ g.active path.medianLine { stroke-width: 3px; }
 
 path.q1Line, path.q3Line { stroke-width: 2px; }
 
+g.active path.quartileArea { fill-opacity: 0.3; }
+
+path.quartileArea.visible {fill-opacity: 0.1;}
+
 g.active path.q1Line, g.active path.q3Line { stroke-width: 3px; }
 
 
